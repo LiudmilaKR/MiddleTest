@@ -24,15 +24,16 @@ def show_notes(load_data: list):
         for item in load_data:
             if item != "":
                 item_list = item.split(';')
-                if item_list[2] == None:
+                if item_list[2] == 'None':
                     print(f'id={item_list[0]} заметка от {item_list[1]} "{item_list[3]}":\n\t{item_list[4]}')
                 else:
-                    print(f'id={item_list[0]} заметка от {item_list[1]} (скорректирована {item_list[2]})' + 
+                    print(f'id={item_list[0]} заметка от {item_list[1]} (скорректирована {item_list[2]}) ' + 
                           f'"{item_list[3]}":\n\t{item_list[4]}')
         print()
 
-def create_note() -> str:
-    cr_id = input('Введите id => ')
+def create_note(id_num: int) -> str:
+    # cr_id = input('Введите id => ')
+    cr_id = str(id_num + 1);
     cr_date = str(datetime.datetime.today())[:10]
     cr_title = input('Введите заголовок => ')
     cr_text = input('Введите текст => ')

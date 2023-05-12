@@ -7,6 +7,18 @@ def load_from_file(path: str) -> list:
         return data_list
     except:
         return []
+
+def take_last_id(path: str) -> int:
+    data_list = load_from_file(path)
+    list_id = []
+    for item in data_list:
+        list_id.append(int(item[0]))
+    # print(list_id)
+    list_id.sort()
+    # list_id.reverse()
+    # print(list_id)
+    return list_id[-1]
+# print(take_last_id('Task1Python/nnotes.txt'))    
  
 def load_to_file_str(path: str, data_for_load: str):
     try:

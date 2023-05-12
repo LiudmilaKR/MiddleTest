@@ -15,7 +15,8 @@ def menu_handler(inp: int):
             view.show_notes(loaded_notes)
             # При чтении списка заметок реализовать фильтрацию по дате.
         case 2: # 2.Создать новую заметку.
-            created_note = view.create_note()
+            last_id = model.take_last_id(path)
+            created_note = view.create_note(last_id)
             model.load_to_file_str(path, created_note)
             view.change_status_create_note()
         case 3: # 3.Редактировать заметку.
