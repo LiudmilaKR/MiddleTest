@@ -16,6 +16,11 @@ def menu() -> int:
 
 def hello():
     print('Начало работы.\n')
+    
+def choose_file() -> str:
+    opt = int(input('Выберите файл заметок: 1 - txt, 2 - csv => '))
+    if opt == 1: return 'Task1Python/nnotes.txt'
+    else: return 'Task1Python/nnotes.csv'
 
 def show_notes(load_data: list):
     if load_data == []:

@@ -3,12 +3,14 @@ import model
 
 def start():
     view.hello()
+    path_file = view.choose_file()
     while (True):
         point = view.menu()
-        menu_handler(point)
+        menu_handler(point, path_file)
 
-def menu_handler(inp: int):
-    path = 'Task1Python/nnotes.txt'
+def menu_handler(inp: int, path: str):
+    # path = 'Task1Python/nnotes.txt'
+    # path = 'Task1Python/nnotes.csv'
     match inp:
         case 1: # 1.Вывести список всех заметок.
             loaded_notes = model.load_from_file(path)
