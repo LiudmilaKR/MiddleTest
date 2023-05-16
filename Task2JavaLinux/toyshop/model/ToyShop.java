@@ -1,11 +1,10 @@
 package Task2JavaLinux.toyshop.model;
 
-import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-public class ToyShop implements Serializable, Iterable<Toy> {
+public class ToyShop implements Iterable<Toy> {
     /**
      * список игрушек
      */

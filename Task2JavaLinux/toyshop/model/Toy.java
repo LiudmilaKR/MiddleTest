@@ -1,8 +1,6 @@
 package Task2JavaLinux.toyshop.model;
 
-import java.io.Serializable;
-
-public class Toy implements Serializable {
+public class Toy {
     /**
      * id игрушки
      */
@@ -35,22 +33,12 @@ public class Toy implements Serializable {
     public int getIdToy() {
         return idToy;
     }
-
-    // public void setIdToy(int idToy) {
-    //     this.idToy = idToy;
-    // }
-
     /**
      * @return String наименование игрушки
      */
     public String getNameToy() {
         return nameToy;
     }
-
-    // public void setNameToy(String nameToy) {
-    //     this.nameToy = nameToy;
-    // }
-
     /**
      * @return int количество игрушек
      */
@@ -63,11 +51,6 @@ public class Toy implements Serializable {
     public void setQuantToy(int quantToy) {
         this.quantToy = quantToy;
     }
-
-    // public double getPToy() {
-    //     return ptoy;
-    // }
-
     /**
      * @param pToy - вероятность выпадения игрушки в выигрыше
      */

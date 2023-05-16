@@ -9,20 +9,15 @@ import Task2JavaLinux.toyshop.view.ConsoleView;
 public class Presenter {
     Service service;
     ConsoleView view;
-
     /**
      * контруктор Presenter
-     * @param path - путь к файлу загрузки-выгруки данных .out
      */
-    public Presenter(String path) {
-        service = new Service(path);
+    public Presenter() {
+        service = new Service();
         view = new ConsoleView();
-        // this.service = service;
-        // this.view = view;
     }
-
     /**
-     * метод запуска программы
+     * запуск программы
      */
     public void start(){
         view.startConsole();
@@ -33,6 +28,11 @@ public class Presenter {
         view.endLottery();
         view.printPrizesList(listPrizes);
         view.printShop(ourShop);
-        view.givingPrizes();
+        view.givingPrize();
+        String prizeToy = service.takePrizeToy(listPrizes);
+        view.printGivingPrize(prizeToy);
+        view.printPrizesList(listPrizes);
+        service.putToFile(prizeToy, "text.txt");
+        view.endLottery();
     }
 }

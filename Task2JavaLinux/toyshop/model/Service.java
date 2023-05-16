@@ -1,27 +1,14 @@
 package Task2JavaLinux.toyshop.model;
 
-import java.io.FileOutputStream;
-import java.io.FileInputStream;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
-import java.io.Serializable;
+import java.io.File;
+import java.io.FileWriter;
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 public class Service {
-    /**
-     * path - путь к файлу загрузки-выгруки данных .out
-     */
-    String path;
-
-    /**
-     * конструкцтор Service
-     * @param path - путь к файлу загрузки-выгруки данных .out
-     */
-    public Service(String path) {
-        this.path = path;
-        // this.ts = ts;
-    }
+    
     /**
      * метод проведения лотереи
      * @param tsh - ToyShop магазин игрушек
@@ -32,31 +19,45 @@ public class Service {
         Map<String, Integer> lotteryMap = new HashMap<>();
         for (int i = 0; i < lotteryQuant; i++) {
             int shosenToyIndex = (int) (Math.random() * tsh.shopSize());
-            String key = "id=" + tsh.getToy(shosenToyIndex).getIdToy() + " " + tsh.getToy(shosenToyIndex).getNameToy();
-            if (lotteryMap.containsKey(key)) lotteryMap.put(key, lotteryMap.get(key) + 1);
-            else lotteryMap.put(key, 1);
-            tsh.removeToy(tsh.getToy(shosenToyIndex));
+            if (tsh.getToy(shosenToyIndex).getQuantToy() > 0) {
+                String key = "id=" + tsh.getToy(shosenToyIndex).getIdToy() + " " + tsh.getToy(shosenToyIndex).getNameToy();
+                if (lotteryMap.containsKey(key)) lotteryMap.put(key, lotteryMap.get(key) + 1);
+                else lotteryMap.put(key, 1);
+                tsh.removeToy(tsh.getToy(shosenToyIndex));
+            } else i--;
         }
-        // System.out.println(lotteryMap);
         return lotteryMap;
     }
     /**
-     * метод получения призовой игрушки
-     * @param ll - Map<String, Integer> список призовых игрушек для выдачи
+     * метод получения призовой игрушки из списка призовых игрушек
+     * @param ll - Map<String, Integer> список призовых игрушек для выдачи, уменьшается на выданную игрушку
      */
-    public void takePrizeToy(Map<String, Integer> ll) {
+    public String takePrizeToy(Map<String, Integer> ll) {
+        List<String> prizeList = new ArrayList<>();
+        for (String item : ll.keySet()) {
+            prizeList.add(item);
+        }
+        int chosenIndex = (int) (Math.random() * prizeList.size());
+        String temp = "";
+        for (Map.Entry<String, Integer> ent : ll.entrySet()) {
+            if (ent.getKey().equals(prizeList.get(chosenIndex))) ll.put(ent.getKey(), ent.getValue() - 1);
 
+        }
+        for (Map.Entry<String, Integer> it : ll.entrySet()) {
+            if (it.getValue() == 0) temp = it.getKey();
+        }
+        ll.remove(temp);
+        return prizeList.get(chosenIndex);
     }
-
     /**
      * метод инициализации магазина игрушек
      * @return ToyShop магазин игрушек
      */
     public ToyShop initialToyShop() {
         ToyShop someToyShop = new ToyShop();
-        someToyShop.addToy(new Toy(109, "Поросёнок", 5));
-        someToyShop.addToy(new Toy(110, "Слоненок", 3));
-        someToyShop.addToy(new Toy(111, "Черепашка", 8));
+        someToyShop.addToy(new Toy(109, "Поросёнок", 15));
+        someToyShop.addToy(new Toy(110, "Слоненок", 31));
+        someToyShop.addToy(new Toy(111, "Черепашка", 18));
         someToyShop.addToy(new Toy(112, "Жирафик", 11));
         someToyShop.addToy(new Toy(113, "Котёнок",41));
         someToyShop.addToy(new Toy(114, "Львенок", 35));
@@ -65,33 +66,20 @@ public class Service {
         someToyShop.addToy(new Toy(117, "Енот", 27));
         return someToyShop;
     }
-
     /**
-     * метод загрузки данных в файл .out
-     * @param ser - Serializable объект (в данном случае ToyShop)
+     * метод добавления выданной призовой игрушки в текстовый файл
+     * @param pt - выданная призовая игрушка
+     * @param path - путь файлу
      */
-    public void putToFile(Serializable ser) {
+    public void putToFile (String pt, String path) {
         try {
-            ObjectOutputStream oos = new ObjectOutputStream(new FileOutputStream(path));
-            oos.writeObject(ser);
-            oos.close();
+            FileWriter fw = new FileWriter(new File(path), false);
+            fw.append("Призовая игрушка => \n");
+            fw.append(pt);
+            fw.flush();
+            fw.close();
         } catch (Exception e) {
             e.getMessage();
-        }
-    }
-    /**
-     * метод выгрузки данных из файла .out
-     * @return ToyShop магазин игрушек
-     */
-    public ToyShop loadFromFile() {
-        try {
-            ObjectInputStream ois = new ObjectInputStream(new FileInputStream(path));
-            // Object ft = ois.readObject();
-            ToyShop ft = (ToyShop)ois.readObject();
-            ois.close();
-            return ft;
-        } catch (Exception e) {
-            return null;
         }
     }
 }

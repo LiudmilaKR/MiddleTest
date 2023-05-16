@@ -21,6 +21,13 @@ public class ConsoleView {
         System.out.println("Начало работы программы.");
     }
     /**
+     * метод оповещения завершения работы программы
+     */
+    public void endtConsole() {
+        System.out.println();
+        System.out.println("Завершение работы программы.");
+    }
+    /**
      * метод вывода на консоль ассортимента магазина
      * @param tsh - ToyShop магазин игрушек
      */
@@ -56,12 +63,20 @@ public class ConsoleView {
         for (var item : toyList.entrySet()) {
             System.out.printf("   игрушка %s - %d шт\n", item.getKey(), item.getValue());
         }
+        System.out.println();
     } 
     /**
-     * метод сообщает о выдаче призовой игрушки
+     * метод сообщает о начале выдачи призовой игрушки
      */
-    public void givingPrizes() {
+    public void givingPrize() {
         System.out.println();
         System.out.println("Выдача призовой игрушки!");
+    }
+    /**
+     * метод сообщает о выборе и выдаче призовой игрушки
+     * @param pt - призовая игрушка к выдаче
+     */
+    public void printGivingPrize(String pt) {
+        System.out.printf("Выдана игрушка %s\n", pt);
     }
 }
